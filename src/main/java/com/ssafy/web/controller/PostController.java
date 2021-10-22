@@ -1,6 +1,6 @@
 package com.ssafy.web.controller;
 
-import com.ssafy.web.component.post.PostComponent;
+import com.ssafy.web.component.post.CommentComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -8,6 +8,6 @@ import org.springframework.stereotype.Controller;
 public class PostController {
 
     @Autowired
-    PostComponent postComponent;
+    CommentComponent commentComponent;
 
 }

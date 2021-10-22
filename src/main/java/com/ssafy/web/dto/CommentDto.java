@@ -4,18 +4,18 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostDto {
+public class CommentDto {
     String member_id;
-    String title;
+    String product_id;
     String content;
     Date date;
 
-    public PostDto() {
+    public CommentDto() {
     }
 
-    public PostDto(String member_id, String title, String content, Date date) {
+    public CommentDto(String member_id, String product_id, String content, Date date) {
         this.member_id = member_id;
-        this.title = title;
+        this.product_id = product_id;
         this.content = content;
         this.date = date;
     }
@@ -28,12 +28,12 @@ public class PostDto {
         this.member_id = member_id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getProduct_id() {
+        return product_id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setProduct_id(String product_id) {
+        this.product_id = product_id;
     }
 
     public String getContent() {

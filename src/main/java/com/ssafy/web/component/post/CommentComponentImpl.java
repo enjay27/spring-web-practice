@@ -1,11 +1,11 @@
-package com.ssafy.web.component.member;
+package com.ssafy.web.component.post;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-class MemberComponentImpl implements MemberComponent {
+class CommentComponentImpl implements CommentComponent {
 
     @Autowired
-    MemberRepository memberRepository;
+    CommentRepository commentRepository;
 }

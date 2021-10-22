@@ -1,0 +1,7 @@
+/out/
+/target/classes/com/ssafy/interceptor/
+/target/classes/com/ssafy/web/aop/
+/target/classes/com/ssafy/web/component/
+/target/classes/com/ssafy/web/controller/
+/target/classes/com/ssafy/web/dto/
+/target/classes/com/ssafy/web/view/
