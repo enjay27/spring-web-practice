@@ -11,6 +11,9 @@ public class FileDto {
         this.saveName = saveName;
     }
 
+    public FileDto() {
+    }
+
     public void setPath(String path) {
         this.path = path;
     }
