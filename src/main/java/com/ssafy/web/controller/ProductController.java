@@ -32,7 +32,7 @@ public class ProductController {
     ProductComponent productComponent;
 
     @GetMapping("/products")
-    public ModelAndView products(@RequestParam("name") String name) throws Exception {
+    public ModelAndView products(@RequestParam(value = "name", required = false) String name) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         List<ProductFileDto> productFileDtos = productComponent.searchProduct(name);
         modelAndView.setViewName("product/list");
@@ -41,7 +41,7 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public String addProducts(ProductDto productDto, @RequestParam("upfile")MultipartFile[] files,
+    public String addProducts(ProductDto productDto, @RequestParam("upfile") MultipartFile[] files,
                               HttpSession session) throws Exception {
         MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
         productDto.setMemberId(memberDto.getId());
@@ -71,5 +71,10 @@ public class ProductController {
         productComponent.addProduct(productFileDto);
 
         return "product/list";
+    }
+
+    @GetMapping("register")
+    public String register() {
+        return "product/registration";
     }
 }

@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="web-practice:Web">
-    <output-path>$PROJECT_DIR$/out/artifacts/web_practice_Web</output-path>
-    <root id="archive" name="web-practice_Web.war">
-      <element id="artifact" artifact-name="web-practice:Web exploded" />
-    </root>
-  </artifact>
-</component>

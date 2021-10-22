@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,13 +23,12 @@ class ProductRepositoryImpl implements ProductRepository {
     @Override
     public List<ProductFileDto> searchProduct(String name) throws Exception {
         Connection connection = dataSource.getConnection();
+        String sql = "select * from product ";
 
-        String sql = "select * from product " +
-                "name like '%?%'";
+        if (name != null) sql += "where name like '%" + name + "%'";
 
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, name);
-        ResultSet resultSet = statement.executeQuery();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
         List<ProductFileDto> productFileDtos = new ArrayList<>();
         while (resultSet.next()) {
             ProductFileDto productFileDto = new ProductFileDto();
