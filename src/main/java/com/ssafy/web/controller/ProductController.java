@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -73,8 +72,32 @@ public class ProductController {
         return "product/list";
     }
 
-    @GetMapping("register")
+    @GetMapping("products/modify")
+    public String modify(@RequestParam("isbn") String isbn, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
+        ProductDto productDto = productComponent.findProduct(isbn);
+        if (productDto != null) {
+            productComponent.modifyProduct(productDto);
+            redirectAttributes.addFlashAttribute("msg", "상품 수정 성공");
+        } else {
+            redirectAttributes.addFlashAttribute("msg", "상품 수정 실패");
+        }
+        return "redirect:/product/list";
+    }
+
+    @GetMapping("products/delete")
+    public String delete(@RequestParam("isbn") String isbn, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
+        ProductDto productDto = productComponent.findProduct(isbn);
+        if (productDto != null) {
+            productComponent.deleteProduct(productDto);
+            redirectAttributes.addFlashAttribute("msg", "상품 삭제 성공");
+        } else {
+            redirectAttributes.addFlashAttribute("msg", "상품 삭제 실패");
+        }
+        return "redirect:/product/list";
+    }
+
+    @GetMapping("products/post")
     public String register() {
-        return "product/registration";
+        return "product/post";
     }
 }

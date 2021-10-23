@@ -2,6 +2,7 @@ package com.ssafy.web.component.product;
 
 import com.ssafy.web.component.file.FileComponent;
 import com.ssafy.web.dto.FileDto;
+import com.ssafy.web.dto.ProductDto;
 import com.ssafy.web.dto.ProductFileDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -92,5 +93,59 @@ class ProductRepositoryImpl implements ProductRepository {
             statement.close();
             connection.close();
         }
+    }
+
+    @Override
+    public ProductDto findProduct(String isbn) throws Exception {
+        Connection connection = dataSource.getConnection();
+        String sql = "select * from product " +
+                "where isbn = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, isbn);
+        ResultSet resultSet = statement.executeQuery();
+        ProductDto productDto = new ProductDto();
+        while(resultSet.next()) {
+            productDto.setIsbn(isbn);
+            productDto.setMemberId(resultSet.getString("member_id"));
+            productDto.setName(resultSet.getString("name"));
+            productDto.setPrice(resultSet.getInt("price"));
+            productDto.setExplanation(resultSet.getString("explanation"));
+        }
+        resultSet.close();
+        statement.close();
+        connection.close();
+        return productDto;
+    }
+
+    @Override
+    public void modifyProduct(ProductDto productDto) throws Exception {
+        Connection connection = dataSource.getConnection();
+        String sql = "update product " +
+                "set name = ?, " +
+                "price = ?, " +
+                "explanation = ? " +
+                "where isbn = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, productDto.getName());
+        statement.setInt(2, productDto.getPrice());
+        statement.setString(3, productDto.getExplanation());
+        statement.setString(4, productDto.getIsbn());
+
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
+    }
+
+    @Override
+    public void deleteProduct(ProductDto productDto) throws Exception {
+        Connection connection = dataSource.getConnection();
+        String sql = "delete from product " +
+                "where isbn = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, productDto.getIsbn());
+
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
     }
 }
