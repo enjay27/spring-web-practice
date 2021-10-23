@@ -69,7 +69,7 @@ public class ProductController {
         }
         productComponent.addProduct(productFileDto);
 
-        return "product/list";
+        return "redirect:/products";
     }
 
     @GetMapping("products/modify")

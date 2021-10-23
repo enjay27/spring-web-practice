@@ -72,20 +72,23 @@ class ProductRepositoryImpl implements ProductRepository {
             statement.executeUpdate();
             StringBuilder fileSql = new StringBuilder("insert into files (product_isbn, path, file_name, save_name) values");
             List<FileDto> files = productFileDto.getFiles();
-            for (int i = 0; i < files.size(); i++) {
-                fileSql.append("(?, ?, ?, ?)");
-                if (i != files.size() - 1)
-                    fileSql.append(",");
+            if (files != null){
+                for (int i = 0; i < files.size(); i++) {
+                    fileSql.append("(?, ?, ?, ?)");
+                    if (i != files.size() - 1)
+                        fileSql.append(",");
+                }
+                statement = connection.prepareStatement(fileSql.toString());
+                int index = 0;
+                for (FileDto file : files) {
+                    statement.setString(++index, productFileDto.getIsbn());
+                    statement.setString(++index, file.getPath());
+                    statement.setString(++index, file.getFileName());
+                    statement.setString(++index, file.getSaveName());
+                }
+                statement.executeUpdate();
             }
-            statement = connection.prepareStatement(fileSql.toString());
-            int index = 0;
-            for (FileDto file : files) {
-                statement.setString(++index, productFileDto.getIsbn());
-                statement.setString(++index, file.getPath());
-                statement.setString(++index, file.getFileName());
-                statement.setString(++index, file.getSaveName());
-            }
-            statement.executeUpdate();
+            connection.commit();
         } catch(SQLException e) {
             connection.rollback();
             throw new SQLException(e);

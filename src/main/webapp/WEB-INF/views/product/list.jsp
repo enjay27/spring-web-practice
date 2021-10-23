@@ -69,38 +69,41 @@
                 <button type="button" id="searchBtn" class="ml-1 btn btn-outline-primary">검색</button>
             </form>
         </div>
-        <c:if test="${!empty articles}">
+        <c:if test="${!empty products}">
             <c:forEach var="product" items="${products}">
                 <table class="table table-active text-left">
                     <tbody>
                     <tr class="table-info">
-                        <td>작성자 : ${product.userName}</td>
-                        <td class="text-right">작성일 : ${product.regTime}</td>
+                        <td colspan="2">판매자 : ${product.memberId}</td>
                     </tr>
                     <tr>
-                        <td colspan="2" class="table-danger">
-                            <strong>${product.articleNo}. ${product.subject}</strong>
+                        <td class="table-danger">
+                            <strong>${product.name}</strong>
+                        </td>
+                        <td class="table-danger">
+                            <strong>상품번호 : ${product.isbn}</strong>
                         </td>
                     </tr>
                     <tr>
-                        <td class="p-4" colspan="2">
-                                ${product.content}
-                        </td>
+                        <td colspan="2">가격 : ${product.price}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">${product.explanation}</td>
                     </tr>
                         <%--파일이 있으면--%>
-                    <c:if test="${!empty product.fileInfos}">
+                    <c:if test="${!empty product.files}">
                         <tr>
                             <td colspan="2">
                                 <ul>
                                         <%--루프 돌면서 실행--%>
-                                    <c:forEach var="file" items="${product.fileInfos}">
-                                    <li>${file.originFile} <a href="#" class="filedown" sfolder="${file.saveFolder}" sfile="${file.saveFile}" ofile="${file.originFile}">[다운로드]</a>
+                                    <c:forEach var="file" items="${product.files}">
+                                    <li>${file.fileName} <a href="#" class="filedown" sfolder="${file.path}" sfile="${file.saveName}" ofile="${file.fileName}">[다운로드]</a>
                                         </c:forEach>
                                 </ul>
                             </td>
                         </tr>
                     </c:if>
-                    <c:if test="${userinfo.userId eq product.userId}">
+                    <c:if test="${userinfo.id eq product.memberId}">
                         <tr>
                             <td colspan="2" class="text-right">
                                 <a href="${root}/products/modify?isbn=${product.isbn}">수정</a>
